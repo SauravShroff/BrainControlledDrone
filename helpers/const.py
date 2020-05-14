@@ -32,5 +32,5 @@ def toWord(int):
   else:
     return "n/f"
 
-print(toWord(5))
+#print(toWord(5))
 
