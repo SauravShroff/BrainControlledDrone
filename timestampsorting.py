@@ -47,12 +47,15 @@ hist,bin_edges = np.histogram(times_np, steps)
 
 print("hist:")
 print(hist)
+print(len(hist))
 
+# print(bin_edges)
+# print(len(bin_edges))
+# print(bin_edges[:-1])
+# print(len(bin_edges[:-1]))
+#plt.figure(figsize=[10,8])
 
-
-# plt.figure(figsize=[10,8])
-
-# plt.bar(bin_edges[:-1], hist, width = 0.5, color='blue',alpha=0.7)
+plt.bar(bin_edges[:-1], hist, .8)
 # plt.xlim(min(bin_edges), max(bin_edges))
 # plt.grid(axis='y', alpha=0.75)
 # plt.xlabel('Occurance ',fontsize=15)
@@ -61,4 +64,4 @@ print(hist)
 # plt.yticks(fontsize=15)
 # plt.ylabel('Frequency',fontsize=15)
 # plt.title('Sample Time Dist',fontsize=15)
-# plt.show()
+plt.show()
