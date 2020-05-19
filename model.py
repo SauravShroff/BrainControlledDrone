@@ -108,13 +108,13 @@ model.add(Conv1D(128, (5), padding='same'))
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
 
-model.add(Conv1D(256, (5), padding='same'))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
+# model.add(Conv1D(256, (5), padding='same'))
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
 
-model.add(Conv1D(512, (5), padding='same'))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
+# model.add(Conv1D(512, (5), padding='same'))
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
 
 model.add(Conv1D(3, (16)))
 model.add(Reshape((3,)))
@@ -123,7 +123,7 @@ model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 epochs = 10
-batch_size = 64
+batch_size = 32
 #print("executing training iteration " + str(itteration))
 model.fit(train_X, train_y, batch_size=batch_size, epochs=epochs, validation_data=(test_X, test_y))
 #model_name = f"new_models/{round(score[1]*100,2)}-acc-64x3-batch-norm-{epoch}epoch-{int(time.time())}-loss-{round(score[0],2)}.model"
