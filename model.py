@@ -94,6 +94,7 @@ model = Sequential()
 model.add(Conv1D(64, (3), input_shape=train_X.shape[1:]))
 model.add(Activation('relu'))
 
+
 model.add(Conv1D(128, (2)))
 model.add(Activation('relu'))
 
@@ -108,6 +109,7 @@ model.add(Dropout(0.2))
 model.add(Conv1D(64, (2)))
 model.add(Activation('relu'))
 model.add(MaxPooling1D(pool_size=(2)))
+model.add(Dropout(0.2))
 
 model.add(Flatten())
 
@@ -122,11 +124,8 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 epochs = 10
 batch_size = 32
-for itteration in range(epochs):
-    # print("executing training iteration " + str(itteration))
-    model.fit(train_X, train_y, batch_size=batch_size, epochs=1, validation_data=(test_X, test_y))
-    score = model.evaluate(test_X, test_y, batch_size=batch_size)
-    print(score)
+#print("executing training iteration " + str(itteration))
+model.fit(train_X, train_y, batch_size=batch_size, epochs=epochs, validation_data=(test_X, test_y))
 #model_name = f"new_models/{round(score[1]*100,2)}-acc-64x3-batch-norm-{epoch}epoch-{int(time.time())}-loss-{round(score[0],2)}.model"
 #model.save(model_name)
 #print("saved:")
