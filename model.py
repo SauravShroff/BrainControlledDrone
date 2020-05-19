@@ -102,15 +102,19 @@ model = Sequential()
 
 model.add(Conv1D(64, (5), padding='same', input_shape=train_X.shape[1:]))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(128, (5), padding='same'))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(256, (5), padding='same'))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(512, (5), padding='same'))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(3, (16)))
 model.add(Reshape((3,)))
