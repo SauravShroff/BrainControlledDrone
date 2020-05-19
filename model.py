@@ -74,6 +74,11 @@ train_y = []
 for X, y in traindata:
     train_X.append(X)
     train_y.append(y)
+print("train samples length:")
+print(len(train_X))
+print("train labels length:")
+print(len(train_y))
+
 
 print("creating validation data")
 testdata = create_data(starting_dir="../model_data/validation_data")
@@ -82,6 +87,10 @@ test_y = []
 for X, y in testdata:
     test_X.append(X)
     test_y.append(y)
+print("val samples length:")
+print(len(test_X))
+print("val labels length:")
+print(len(test_y))
 
 train_X = np.array(train_X).reshape(reshape)
 test_X = np.array(test_X).reshape(reshape)
@@ -122,11 +131,11 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-epochs = 10
-batch_size = 32
-#print("executing training iteration " + str(itteration))
-model.fit(train_X, train_y, batch_size=batch_size, epochs=epochs, validation_data=(test_X, test_y))
-#model_name = f"new_models/{round(score[1]*100,2)}-acc-64x3-batch-norm-{epoch}epoch-{int(time.time())}-loss-{round(score[0],2)}.model"
-#model.save(model_name)
-#print("saved:")
-#print(MODEL_NAME)
+# epochs = 10
+# batch_size = 32
+# #print("executing training iteration " + str(itteration))
+# model.fit(train_X, train_y, batch_size=batch_size, epochs=epochs, validation_data=(test_X, test_y))
+# #model_name = f"new_models/{round(score[1]*100,2)}-acc-64x3-batch-norm-{epoch}epoch-{int(time.time())}-loss-{round(score[0],2)}.model"
+# #model.save(model_name)
+# #print("saved:")
+# #print(MODEL_NAME)
