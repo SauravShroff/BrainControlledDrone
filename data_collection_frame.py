@@ -12,4 +12,13 @@ import brainflow
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
 from brainflow.data_filter import DataFilter, FilterTypes, AggOperations
 
+ENABLE_LOGGER = False
+
+
+
+params = BrainFlowInputParams()
+params.serial_port = "serial_port"
+
 board_id = BoardIds.CYTON_DAISY_BOARD
+
+board_object = BoardShim (board_id, params)
