@@ -7,18 +7,43 @@
 
 import time
 import numpy as np
+import matplotlib.pyplot as plt
 
-import brainflow
-from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
-from brainflow.data_filter import DataFilter, FilterTypes, AggOperations
+# import brainflow
+# from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
+# from brainflow.data_filter import DataFilter, FilterTypes, AggOperations
 
-ENABLE_LOGGER = False
+from pylsl import StreamInlet, resolve_stream
 
+# ENABLE_LOGGER = False
 
+# params = BrainFlowInputParams()
+# params.serial_port = "serial_port"
 
-params = BrainFlowInputParams()
-params.serial_port = "serial_port"
+# board_id = BoardIds.CYTON_DAISY_BOARD
 
-board_id = BoardIds.CYTON_DAISY_BOARD
+# board_object = BoardShim (board_id, params)
 
-board_object = BoardShim (board_id, params)
+print("finding stream :)")
+streams = resolve_stream('type', 'EEG')
+print("resolved stream")
+inlet = StreamInlet(streams[0])
+print("created inlet")
+
+channel_data = {}
+
+for i in range(5):
+    for i in range(16):
+        sample, timestep = inlet.pull_sample()
+        print("found sample:")
+        print(sample)
+        print("on timestep:")
+        print(timestep)
+        if i not in channel_data:
+            channel_data[i] = sample
+        else:
+            channel_data[i].append(sample)
+        
+for i in channel_data:
+    plt.plot(channel_data[i])
+plt.show()
