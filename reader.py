@@ -7,8 +7,8 @@
 
 import usb.core
 
-ID_VENDOR = 0x0000 # Find id_vendor and id_prodcut by using lsusb on the command line
-ID_PRODUCT = 0xFFFF
+ID_VENDOR = 0x25a7 # Find id_vendor and id_prodcut by using lsusb on the command line
+ID_PRODUCT = 0xfa23
 NUM_BYTES = 1024
 
 dev = usb.core.find(idVendor = ID_VENDOR, idProduct = ID_PRODUCT)
@@ -26,3 +26,11 @@ ret = dev.read(endpoint_adr, NUM_BYTES)
 
 print(len(ret))
 print(ret)
+
+
+
+# #debug test
+# import os
+# os.environ['PYUSB_DEBUG'] = 'debug'
+# import usb.core
+# usb.core.find()
