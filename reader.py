@@ -20,9 +20,9 @@ if dev.is_kernel_driver_active(i):
     dev.detach_kernel_driver(i)
 
 dev.set_configuration()
-endpointadr = endpoint.bEndpointAddress
+endpoint_adr = endpoint.bEndpointAddress
 
-ret = dev.read(endpointadr, NUM_BYTES)
+ret = dev.read(endpoint_adr, NUM_BYTES)
 
 print(len(ret))
 print(ret)
