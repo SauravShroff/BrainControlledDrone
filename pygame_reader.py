@@ -17,6 +17,9 @@ done = False
 
 while(not done):
     outputStr = ""
+    previousOutput=""
     for i in range(controller.get_numaxes()):
         outputStr += str(controller.get_axis(i)) + " "
+    if(outputStr != previousOutput){}
     print(f'{outputStr}\r', end="")
+    previousOutput = outputStr
