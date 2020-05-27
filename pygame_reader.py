@@ -4,6 +4,7 @@
 ### Author: Saurav Shroff
 
 import pygame
+import numpy as np
 
 pygame.init()
 pygame.joystick.init()
@@ -15,11 +16,8 @@ controller.init()
 done = False
 
 
-while(not done):
-    outputStr = ""
-    previousOutput=""
-    for i in range(controller.get_numaxes()):
-        outputStr += str(controller.get_axis(i)) + " "
-    if(outputStr != previousOutput){}
-    print(f'{outputStr}\r', end="")
-    previousOutput = outputStr
+# while(not done):
+#     array = np.array()
+#     for i in range(controller.get_numaxes()):
+#         array.append(i)
+#     print(f'{array}\r', end="")
