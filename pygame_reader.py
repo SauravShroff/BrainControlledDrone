@@ -15,9 +15,10 @@ controller = joysticks[0]
 controller.init()
 done = False
 
+print(controller.get_numaxes())
 
-# while(not done):
-#     array = np.array()
-#     for i in range(controller.get_numaxes()):
-#         array.append(i)
-#     print(f'{array}\r', end="")
+while(not done):
+    array = np.array([])
+    for i in range(controller.get_numaxes()):
+        np.append(array, controller.get_axis(i))
+    print(array)
