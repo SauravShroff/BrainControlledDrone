@@ -35,7 +35,7 @@ pygame.init()
 # Set the width and height of the screen (width, height).
 screen = pygame.display.set_mode((500, 700))
 
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("We out here making rotis u know how it be")
 
 # Loop until the user clicks the close button.
 done = False
