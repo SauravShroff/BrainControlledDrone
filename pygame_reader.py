@@ -17,8 +17,10 @@ done = False
 
 print(controller.get_numaxes())
 
-while(not done):
-    array = np.array([])
-    for i in range(controller.get_numaxes()):
-        np.append(array, controller.get_axis(i))
-    print(array)
+while(True):
+    print(controller.get_axis(1))
+# while(not done):
+#     array = np.array([])
+#     for i in range(controller.get_numaxes()):
+#         np.append(array, controller.get_axis(i))
+#     print(array)
