@@ -135,6 +135,7 @@ while not done:
     clock.tick(20)
 
 # Close the window and quit.
+# B
 # If you forget this line, the program will 'hang'
 # on exit if running from IDLE.
 pygame.quit()
