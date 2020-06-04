@@ -111,7 +111,8 @@ while not done:
             axis = joystick.get_axis(i)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
         textPrint.unindent()
-        client.moveByVelocityAsync(inputs[3], -inputs[2], -inputs[1], 3).join()
+        client.moveByVelocityAsync(
+            inputs[3], -inputs[2], -1, 0.1).join()
 
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
