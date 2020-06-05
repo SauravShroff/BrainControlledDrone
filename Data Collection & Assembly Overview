@@ -1,0 +1,17 @@
+Data Collection & Assembly Overview:
+
+This document describes how data is collected, constructed, and stored. It also in
+
+Collection:
+Run Simulator
+Turn on and arm controller
+Run testgame.py, which will collect and store 3 arrays
+Array 1: [brain_data_package, timestamp]
+Array 2: [controller_data_package, timestamp]
+Array 3: [simulator_data_package, timestamp]
+
+Arrays have names as follow: 1b, 2c, 3s. Files 
+
+
+
+
