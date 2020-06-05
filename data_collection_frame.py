@@ -1,9 +1,9 @@
-### This file is created to collect and store training data according to
-### paramaters reading from both the OpenBCI headset and the Spektrum
-### controller
-### Author: Saurav Shroff
-### READ: make sure to locally run "python -m pip install brainflow" otherwise (@NicholasWeaver) "you're GONNA have a BAD DAY"
-### Visit: https://brainflow.readthedocs.io/en/stable/UserAPI.html for documentation on the Cyton/Daisy board SDK
+# This file is created to collect and store training data according to
+# paramaters reading from both the OpenBCI headset and the Spektrum
+# controller
+# Author: Saurav Shroff
+# READ: make sure to locally run "python -m pip install brainflow" otherwise (@NicholasWeaver) "you're GONNA have a BAD DAY"
+# Visit: https://brainflow.readthedocs.io/en/stable/UserAPI.html for documentation on the Cyton/Daisy board SDK
 
 import time
 import numpy as np
@@ -43,7 +43,7 @@ for i in range(5):
             channel_data[i] = sample
         else:
             channel_data[i].append(sample)
-        
+
 for i in channel_data:
     plt.plot(channel_data[i])
 plt.show()
