@@ -1,8 +1,17 @@
+# Hello
+import airsim
 import pygame
 
 # Define some colors.
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
+
+
+# connect to the AirSim simulator
+client = airsim.MultirotorClient()
+client.confirmConnection()
+client.enableApiControl(True)
+client.armDisarm(True)
 
 
 # This is a simple class that will help us print to the screen.
@@ -56,9 +65,9 @@ while not done:
     #
     # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
     # JOYBUTTONUP, JOYHATMOTION
-    for event in pygame.event.get(): # User did something.
-        if event.type == pygame.QUIT: # If user clicked close.
-            done = True # Flag that we are done so we exit this loop.
+    for event in pygame.event.get():  # User did something.
+        if event.type == pygame.QUIT:  # If user clicked close.
+            done = True  # Flag that we are done so we exit this loop.
         elif event.type == pygame.JOYBUTTONDOWN:
             print("Joystick button pressed.")
         elif event.type == pygame.JOYBUTTONUP:
@@ -96,10 +105,15 @@ while not done:
         textPrint.tprint(screen, "Number of axes: {}".format(axes))
         textPrint.indent()
 
+        # Order: Rudder (Higher = left), Throttle (Higher = up), L/R Bank (Higher = left), Pitch (Higher = forward)
+        inputs = []
         for i in range(axes):
+            inputs.append(i)
             axis = joystick.get_axis(i)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
-        textPrint.unindent() 
+        textPrint.unindent()
+        client.moveByVelocityAsync(
+            inputs[3], -inputs[2], -1, 0.1).join()
 
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
