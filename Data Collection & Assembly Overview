@@ -3,14 +3,29 @@ Data Collection & Assembly Overview:
 This document describes how data is collected, constructed, and stored. It also in
 
 Collection:
-Run Simulator
-Turn on and arm controller
-Run testgame.py, which will collect and store 3 arrays
-Array 1: [brain_data_package, timestamp]
-Array 2: [controller_data_package, timestamp]
-Array 3: [simulator_data_package, timestamp]
+    Instructions:
+        Run Simulator
+        Turn on and arm controller
+        Run testgame.py, which will collect and store the data
+    Data Format:
+        testgame.py generates 3 arrays at each timestep (if possible)
+            Array 1: [brain_data_package, timestamp]
+            Array 2: [controller_data_package, timestamp]
+            Array 3: [simulator_data_package, timestamp]
 
-Arrays have names as follow: 1b, 2c, 3s. Files 
+            brain_data_package is an array of Fast Fourier Transform electrode data in a format described in the open BCI docs (add link)
+            controller_data_package is simple a 4 element array with floating point values corresponding to stick position [throttle, rotation, bank, pitch] (add derivative)
+            simulator_data_package is a fuckin yikes boys
+        testgame.py at time of closure will intentionally trunkate the last 10 second of ALL data, giving the user 10 seconds to stop flying
+        testgame.py will then independantly package each one of these arrays into an .npy format file, and place them in a folder
+        testgame.py uses the following conventions:
+            saved folder name: start_time + end_time
+            folder contents: 1a.npy, 2b.npy, 3c.npy (corresponding to each array)
+            note: each array in the folder may not be the same length due to a variable sampling rate
+    
+Assembley:
+    Instruction: run assembley.py with a start and end date paramater
+    //to be contined boys
 
 
 
