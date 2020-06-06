@@ -14,7 +14,7 @@ Collection:
             Array 3: [simulator_data_package, timestamp]
 
             brain_data_package is an array of Fast Fourier Transform electrode data in a format described in the open BCI docs (add link)
-            controller_data_package is simple a 4 element array with floating point values corresponding to stick position [throttle, rotation, bank, pitch] (add derivative)
+            controller_data_package is simple a 4 element array with floating point values corresponding to stick position [throttle, rotation, pitch, bank] (add derivative)
             simulator_data_package is a fuckin yikes boys
         testgame.py at time of closure will intentionally trunkate the last 10 second of ALL data, giving the user 10 seconds to stop flying
         testgame.py will then independantly package each one of these arrays into an .npy format file, and place them in a folder

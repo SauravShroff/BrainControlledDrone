@@ -2,6 +2,7 @@
 import airsim
 import pygame
 
+
 # Define some colors.
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
@@ -105,16 +106,14 @@ while not done:
         textPrint.tprint(screen, "Number of axes: {}".format(axes))
         textPrint.indent()
 
-        # Order: Rudder (Higher = left), Throttle (Higher = up), L/R Bank (Higher = left), Pitch (Higher = forward)
+        # Order: (0)Rudder (Higher = left), (1)Throttle (Higher = up), (2)L/R Bank (Higher = left), (3)Pitch (Higher = forward)
         inputs = []
         for i in range(axes):
-            inputs.append(i)
             axis = joystick.get_axis(i)
+            inputs.append(axis)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
         textPrint.unindent()
-        client.moveByVelocityAsync(
-            inputs[3], -inputs[2], -1, 0.1).join()
-
+        controller_data_package = [inputs[1], inputs[0], inputs[3], inputs[2]]
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
         textPrint.indent()
@@ -152,4 +151,6 @@ while not done:
 # B
 # If you forget this line, the program will 'hang'
 # on exit if running from IDLE.
+
+# SAURAV ADD CODE TO SAVE FILES HERE PLEASE AND THANKS :)
 pygame.quit()
