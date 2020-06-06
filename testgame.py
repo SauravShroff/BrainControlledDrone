@@ -2,6 +2,7 @@
 import airsim
 import pygame
 import time
+import numpy as np
 
 
 # Define some colors.
@@ -60,6 +61,11 @@ pygame.joystick.init()
 # Get ready to print.
 textPrint = TextPrint()
 
+# initialize arrays
+one_brain = np.array()
+two_controller = np.array()
+three_simulator = np.array()
+
 # -------- Main Program Loop -----------
 while not done:
     #
@@ -70,14 +76,7 @@ while not done:
     for event in pygame.event.get():  # User did something.
         if event.type == pygame.QUIT:  # If user clicked close.
             done = True  # Flag that we are done so we exit this loop.
-        elif event.type == pygame.JOYBUTTONDOWN:
-            print("Joystick button pressed.")
-        elif event.type == pygame.JOYBUTTONUP:
-            print("Joystick button released.")
 
-    #
-    # DRAWING STEP
-    #
     # First, clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
     screen.fill(WHITE)
@@ -86,20 +85,10 @@ while not done:
     # Get count of joysticks.
     joystick_count = pygame.joystick.get_count()
 
-    textPrint.tprint(screen, "Number of joysticks: {}".format(joystick_count))
-    textPrint.indent()
-
     # For each joystick:
     for i in range(joystick_count):
         joystick = pygame.joystick.Joystick(i)
         joystick.init()
-
-        textPrint.tprint(screen, "Joystick {}".format(i))
-        textPrint.indent()
-
-        # Get the name from the OS for the controller/joystick.
-        name = joystick.get_name()
-        textPrint.tprint(screen, "Joystick name: {}".format(name))
 
         # Usually axis run in pairs, up/down for one, and left/right for
         # the other.
@@ -114,9 +103,13 @@ while not done:
             inputs.append(axis)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
         textPrint.unindent()
-        controller_data_package = [inputs[1], inputs[0], inputs[5], inputs[2]]
-        controller_data_array = [controller_data_package, time.time()]
+
+        controller_data_package = np.array(
+            [inputs[1], inputs[0], inputs[5], inputs[2]])
+        controller_data_array = np.array(
+            [controller_data_package, time.time()])
         print(controller_data_array)
+
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
         textPrint.indent()
@@ -125,17 +118,6 @@ while not done:
             button = joystick.get_button(i)
             textPrint.tprint(screen,
                              "Button {:>2} value: {}".format(i, button))
-        textPrint.unindent()
-
-        hats = joystick.get_numhats()
-        textPrint.tprint(screen, "Number of hats: {}".format(hats))
-        textPrint.indent()
-
-        # Hat position. All or nothing for direction, not a float like
-        # get_axis(). Position is a tuple of int values (x, y).
-        for i in range(hats):
-            hat = joystick.get_hat(i)
-            textPrint.tprint(screen, "Hat {} value: {}".format(i, str(hat)))
         textPrint.unindent()
 
         textPrint.unindent()
@@ -156,6 +138,4 @@ while not done:
 # on exit if running from IDLE.
 
 # SAURAV ADD CODE TO SAVE FILES HERE PLEASE AND THANKS :)
-for i in range(10000000):
-    print(i)
 pygame.quit()

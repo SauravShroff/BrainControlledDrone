@@ -20,7 +20,7 @@ Collection:
         testgame.py will then independantly package each one of these arrays into an .npy format file, and place them in a folder
         testgame.py uses the following conventions:
             saved folder name: start_time + end_time
-            folder contents: 1a.npy, 2b.npy, 3c.npy (corresponding to each array)
+            folder contents: 1b.npy, 2c.npy, 3s.npy (corresponding to each array)
             note: each array in the folder may not be the same length due to a variable sampling rate
     
 Assembley:
