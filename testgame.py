@@ -1,6 +1,7 @@
 # Hello
 import airsim
 import pygame
+import time
 
 
 # Define some colors.
@@ -9,10 +10,10 @@ WHITE = pygame.Color('white')
 
 
 # connect to the AirSim simulator
-client = airsim.MultirotorClient()
-client.confirmConnection()
-client.enableApiControl(True)
-client.armDisarm(True)
+# client = airsim.MultirotorClient()
+# client.confirmConnection()
+# client.enableApiControl(True)
+# client.armDisarm(True)
 
 
 # This is a simple class that will help us print to the screen.
@@ -106,14 +107,16 @@ while not done:
         textPrint.tprint(screen, "Number of axes: {}".format(axes))
         textPrint.indent()
 
-        # Order: (0)Rudder (Higher = left), (1)Throttle (Higher = up), (2)L/R Bank (Higher = left), (3)Pitch (Higher = forward)
+        # Order: (0)Rudder (Higher = left), (1)Throttle (Higher = up), (2)L/R Bank (Higher = left), (5)Pitch (Higher = forward)
         inputs = []
         for i in range(axes):
             axis = joystick.get_axis(i)
             inputs.append(axis)
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
         textPrint.unindent()
-        controller_data_package = [inputs[1], inputs[0], inputs[3], inputs[2]]
+        controller_data_package = [inputs[1], inputs[0], inputs[5], inputs[2]]
+        controller_data_array = [controller_data_package, time.time()]
+        print(controller_data_array)
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
         textPrint.indent()
@@ -153,4 +156,6 @@ while not done:
 # on exit if running from IDLE.
 
 # SAURAV ADD CODE TO SAVE FILES HERE PLEASE AND THANKS :)
+for i in range(10000000):
+    print(i)
 pygame.quit()
