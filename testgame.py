@@ -3,6 +3,7 @@ import airsim
 import pygame
 import time
 import numpy as np
+from pathlib import Path
 
 
 # Define some colors.
@@ -62,13 +63,16 @@ pygame.joystick.init()
 textPrint = TextPrint()
 
 # initialize arrays
-one_brain = np.array()
-two_controller = np.array()
-three_simulator = np.array()
+one_brain = np.array([])
+two_controller = np.array([[0, 0, 0, 0, 0]])
+three_simulator = np.array([])
+
+# initialize start time
+start_time = time.time()
+counter = 0
 
 # -------- Main Program Loop -----------
 while not done:
-    #
     # EVENT PROCESSING STEP
     #
     # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
@@ -105,10 +109,9 @@ while not done:
         textPrint.unindent()
 
         controller_data_package = np.array(
-            [inputs[1], inputs[0], inputs[5], inputs[2]])
-        controller_data_array = np.array(
-            [controller_data_package, time.time()])
-        print(controller_data_array)
+            [[inputs[1], inputs[0], inputs[5], inputs[2], time.time()]])
+        # print(controller_data_package)
+        two_controller = np.append(two_controller, controller_data_package, 0)
 
         buttons = joystick.get_numbuttons()
         textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
@@ -129,7 +132,8 @@ while not done:
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
-    # Limit to 20 frames per second.
+    # Limit to 20 frames per second.cc
+    counter += 1
     clock.tick(20)
 
 # Close the window and quit.
@@ -138,4 +142,17 @@ while not done:
 # on exit if running from IDLE.
 
 # SAURAV ADD CODE TO SAVE FILES HERE PLEASE AND THANKS :)
+
+# remove the first dummy element from the np array
+two_controller = np.delete(two_controller, 0, 0)
+
+
+seconds_elapsed = time.time() - start_time  # cur time minus start time
+
+samples = two_controller.shape[0]
+samples_per_second = samples/seconds_elapsed
+cycles_per_second = counter/seconds_elapsed
+print(samples_per_second)
+print(cycles_per_second)
+print(two_controller)
 pygame.quit()
