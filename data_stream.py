@@ -112,21 +112,13 @@ while not done:
 
         controller_data_package = np.array(
             [[inputs[1], inputs[0], inputs[5], inputs[2], time.time()]])
+
+        # take brain image
         brain_data_package = cyton_interface.pull_fft(inlet)
+        one_brain = np.append(one_brain, brain_data_package)
+
         # print(controller_data_package)
         two_controller = np.append(two_controller, controller_data_package, 0)
-
-        buttons = joystick.get_numbuttons()
-        textPrint.tprint(screen, "Number of buttons: {}".format(buttons))
-        textPrint.indent()
-
-        for i in range(buttons):
-            button = joystick.get_button(i)
-            textPrint.tprint(screen,
-                             "Button {:>2} value: {}".format(i, button))
-        textPrint.unindent()
-
-        textPrint.unindent()
 
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
@@ -137,7 +129,7 @@ while not done:
 
     # Limit to 20 frames per second.cc
     counter += 1
-    clock.tick(20)
+    clock.tick(60)
 
 # Close the window and quit.
 # If you forget this line, the program will 'hang'
@@ -145,16 +137,27 @@ while not done:
 
 # SAURAV ADD CODE TO SAVE FILES HERE PLEASE AND THANKS :)
 
+
+# PREPEARE ARRAYS FOR SAVING
+
 # remove the first dummy element from the np array
+one_brain = one_brain  # edit if needed, remove if not
 two_controller = np.delete(two_controller, 0, 0)
+three_simulator = three_simulator  # edit if needed remove if not
+
+# SAVE ARRAYS TO SPECIFIED LOC
+
+# np.save(one_brain) # add loc :)
+# np.save(two_controller)
+# np.save(three_simulator)
 
 
-seconds_elapsed = time.time() - start_time  # cur time minus start time
+seconds_elapsed = time.time() - start_time  # time now minus start time
 
 samples = two_controller.shape[0]
 samples_per_second = samples/seconds_elapsed
 cycles_per_second = counter/seconds_elapsed
 print(samples_per_second)
 print(cycles_per_second)
-print(two_controller)
+# print(two_controller)
 pygame.quit()
