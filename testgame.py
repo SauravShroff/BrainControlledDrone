@@ -4,7 +4,7 @@ import pygame
 import time
 import numpy as np
 from pathlib import Path
-
+import cyton_interface
 
 # Define some colors.
 BLACK = pygame.Color('black')
@@ -70,6 +70,8 @@ three_simulator = np.array([])
 # initialize start time
 start_time = time.time()
 counter = 0
+inlet = cyton_interface.connect_to_cyton()
+
 
 # -------- Main Program Loop -----------
 while not done:
@@ -110,6 +112,7 @@ while not done:
 
         controller_data_package = np.array(
             [[inputs[1], inputs[0], inputs[5], inputs[2], time.time()]])
+        brain_data_package = cyton_interface.pull_fft(inlet)
         # print(controller_data_package)
         two_controller = np.append(two_controller, controller_data_package, 0)
 

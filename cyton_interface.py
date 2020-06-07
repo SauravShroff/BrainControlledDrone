@@ -24,46 +24,50 @@ from pylsl import StreamInlet, resolve_stream
 
 # board_object = BoardShim (board_id, params)
 
-print("finding stream :)")
-streams = resolve_stream('type', 'EEG')
-print("resolved stream")
-inlet = StreamInlet(streams[0])
-print("created inlet")
 
-channel_data = {}
+def connect_to_cyton():
+    print("finding stream :)")
+    streams = resolve_stream('type', 'EEG')
+    print("resolved stream")
+    inlet = StreamInlet(streams[0])
+    print("created inlet")
+    return inlet
+
+
 channel_datatwo = {}
 
-for i in range(1):
+
+def pull_fft(inlet):
+    channel_data = {}
     for i in range(16):
         sample, timestep = inlet.pull_sample()
         # print("found sample:")
         # print(sample)
         # print("on timestep:")
         # print(timestep)
-        if i not in channel_data:
-            channel_data[i] = sample
-        else:
-            channel_data[i].append(sample)
-
-for i in range(1):
-    for i in range(16):
-        sample, timestep = inlet.pull_sample()
-        # print("found sample:")
-        # print(sample)
-        # print("on timestep:")
-        # print(timestep)
-        if i not in channel_datatwo:
-            channel_datatwo[i] = sample
-        else:
-            channel_datatwo[i].append(sample)
+        channel_data[i] = sample
+        return channel_data
 
 
-print(len(channel_data))
-print(len(channel_data[0]))
-print(len(channel_datatwo))
-print(len(channel_datatwo[0]))
-# print(channel_data[0])
-# print(len(channel_data[1]))
-# for i in channel_data:
-#     plt.plot(channel_data[i])
-# plt.show()
+# for i in range(1):
+#     for i in range(16):
+#         sample, timestep = inlet.pull_sample()
+#         # print("found sample:")
+#         # print(sample)
+#         # print("on timestep:")
+#         # print(timestep)
+#         if i not in channel_datatwo:
+#             channel_datatwo[i] = sample
+#         else:
+#             channel_datatwo[i].append(sample)
+
+
+# print(len(channel_data))
+# print(len(channel_data[0]))
+# print(len(channel_datatwo))
+# print(len(channel_datatwo[0]))
+# # print(channel_data[0])
+# # print(len(channel_data[1]))
+# # for i in channel_data:
+# #     plt.plot(channel_data[i])
+# # plt.show()
