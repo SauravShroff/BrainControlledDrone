@@ -147,7 +147,7 @@ three_simulator = three_simulator  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
-# np.save(one_brain) # add loc :)
+np.save("one_brain.npy", one_brain)  # add loc :)
 # np.save(two_controller)
 # np.save(three_simulator)
 
