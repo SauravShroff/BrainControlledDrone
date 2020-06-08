@@ -33,8 +33,7 @@ def connect_to_cyton():
     print("created inlet")
     return inlet
 
-
-channel_datatwo = {}
+# channel_datatwo = {}
 
 
 def pull_fft(inlet):
