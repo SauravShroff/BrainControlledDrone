@@ -12,13 +12,6 @@ BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
 
 
-# connect to the AirSim simulator
-# client = airsim.MultirotorClient()
-# client.confirmConnection()
-# client.enableApiControl(True)
-# client.armDisarm(True)
-
-
 # This is a simple class that will help us print to the screen.
 # It has nothing to do with the joysticks, just outputting the
 # information.

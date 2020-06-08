@@ -45,6 +45,7 @@ def pull_fft(inlet):
         # print(sample)
         # print("on timestep:")
         # print(timestep)
+        print(sample)
         channel_data[i] = sample
         return channel_data
 
