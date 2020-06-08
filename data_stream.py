@@ -75,6 +75,7 @@ while not done:
     #
     # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
     # JOYBUTTONUP, JOYHATMOTION
+
     for event in pygame.event.get():  # User did something.
         if event.type == pygame.QUIT:  # If user clicked close.
             done = True  # Flag that we are done so we exit this loop.
