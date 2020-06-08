@@ -38,7 +38,7 @@ channel_datatwo = {}
 
 
 def pull_fft(inlet):
-    channel_data = [None] * 16
+    channel_data = []
     for i in range(16):
         sample, timestep = inlet.pull_sample()
         # print("found sample:")
@@ -46,8 +46,8 @@ def pull_fft(inlet):
         # print("on timestep:")
         # print(timestep)
         # print(sample)
-        channel_data[i] = sample
-        return channel_data
+        channel_data.append(np.array(sample))
+    return np.array(channel_data)
 
 
 # for i in range(1):
