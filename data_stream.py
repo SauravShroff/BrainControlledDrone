@@ -57,7 +57,7 @@ pygame.joystick.init()
 textPrint = TextPrint()
 
 # initialize arrays
-one_brain = np.array([])
+one_brain = []
 two_controller = np.array([[0, 0, 0, 0, 0]])
 three_simulator = np.array([])
 
@@ -112,7 +112,7 @@ while not done:
 
         # take brain image
         brain_data_package = cyton_interface.pull_fft(inlet)
-        one_brain = np.append(one_brain, brain_data_package)
+        one_brain.append(brain_data_package)
 
         # print(controller_data_package)
         two_controller = np.append(two_controller, controller_data_package, 0)
@@ -136,32 +136,30 @@ end_time = time.time()
 seconds_elapsed = end_time - start_time  # time now minus start time
 samples_per_second = counter/seconds_elapsed
 
-analytics = {
-    "starttime": start_time,
-    "endtime": end_time,
-    "seconds_elapsed": seconds_elapsed,
-    "samples_per_second": samples_per_second
-}
+analytics = np.array(
+    [start_time, end_time, seconds_elapsed, samples_per_second])
 
 # CREATE DIRECTORY FOR SAVING
 
 folder_name = str(int(start_time)) + " to " + str(int(end_time))
 location = "D:/model_data/" + folder_name
 os.mkdir(location)
-# SAVE ANALYTICS
 
-# np.save(analytics)
 
 # PREPEARE ARRAYS FOR SAVING
 
-one_brain = one_brain  # edit if needed, remove if not
+one_brain = np.array([one_brain])
+one_brain = one_brain[0]
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
 three_simulator = three_simulator  # edit if needed remove if not
+analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
 np.save("D:/model_data/" + folder_name + "/1b.npy", one_brain)  # add loc :)
 np.save("D:/model_data/" + folder_name + "/2c.npy", two_controller)
 np.save("D:/model_data/" + folder_name + "/3s.npy", three_simulator)
+np.save("D:/model_data/" + folder_name + "/analytics.npy", analytics)
+
 # close game
 pygame.quit()
