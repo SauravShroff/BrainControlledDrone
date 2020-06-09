@@ -1,4 +1,4 @@
-# fill in an accurate file path
+# fill in an accurate file path, run to see useful analyics on data
 import numpy as np
 
 file_path = "D:/model_data/1591659935 to 1591659941"
