@@ -37,6 +37,14 @@ class TextPrint(object):
         self.x -= 10
 
 
+minX = -0.678
+maxX = 0.681
+
+
+def norm(axis):
+    return max(0, min(1, (axis - minX) / (maxX - minX)))
+
+
 pygame.init()
 
 # Set the width and height of the screen (width, height).
@@ -58,7 +66,7 @@ textPrint = TextPrint()
 
 # initialize arrays
 one_brain = []
-two_controller = np.array([[0, 0, 0, 0, 0]])
+two_controller = np.array([[0, 0, 0, 0]])
 three_simulator = np.array([])
 
 # initialize start time
@@ -108,7 +116,7 @@ while not done:
         textPrint.unindent()
 
         controller_data_package = np.array(
-            [[inputs[1], inputs[0], inputs[5], inputs[2], time.time()]])
+            [[inputs[1], inputs[0], inputs[5], inputs[2]]])
 
         # take brain image
         brain_data_package = cyton_interface.pull_fft(inlet)
@@ -151,6 +159,10 @@ os.mkdir(location)
 one_brain = np.array([one_brain])
 one_brain = one_brain[0]
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
+for frame in two_controller:
+    for val in range(len(frame)):
+        frame[val] = norm(frame[val])
+two_controller = np.clip(two_controller, 0, 1)
 three_simulator = three_simulator  # edit if needed remove if not
 analytics = analytics  # edit if needed remove if not
 
