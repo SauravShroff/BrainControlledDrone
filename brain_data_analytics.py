@@ -25,4 +25,5 @@ print("the recording started at " + str(analytics[0]) + ", ended at " + str(
 controller = np.load(file_path + "/2c.npy")
 print(controller.shape)
 for i in controller:
-    print(i.tolist())
+    # print(i.tolist())
+    continue

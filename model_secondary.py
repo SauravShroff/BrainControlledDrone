@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
 
-#file drop
+# file drop
 # set_count = 20000
 # training_vals = np.array([])
 # for i in range(set_count):
@@ -28,25 +28,27 @@ def create_data(starting_dir="../model_data/data"):
         if action not in training_data:
             training_data[action] = []
 
-        data_dir = os.path.join(starting_dir,action)
+        data_dir = os.path.join(starting_dir, action)
         for item in os.listdir(data_dir):
-          x = "Loaded " + str((files_loaded + 1)) + " files from within " + starting_dir
-          files_loaded += 1
-          print('{}\r'.format(x), end="")
-          data = np.load(os.path.join(data_dir, item))
-          for item in data:
-              training_data[action].append(item)
+            x = "Loaded " + str((files_loaded + 1)) + \
+                " files from within " + starting_dir
+            files_loaded += 1
+            print('{}\r'.format(x), end="")
+            data = np.load(os.path.join(data_dir, item))
+            for item in data:
+                training_data[action].append(item)
 
     lengths = [len(training_data[action]) for action in ACTIONS]
     print(lengths)
 
     for action in ACTIONS:
-        np.random.shuffle(training_data[action])  # note that regular shuffle is GOOF af
+        # note that regular shuffle is GOOF af
+        np.random.shuffle(training_data[action])
         training_data[action] = training_data[action][:min(lengths)]
 
     lengths = [len(training_data[action]) for action in ACTIONS]
     print(lengths)
-    # creating X, y 
+    # creating X, y
     combined_data = []
     for action in ACTIONS:
         for data in training_data[action]:
@@ -62,7 +64,7 @@ def create_data(starting_dir="../model_data/data"):
                 combined_data.append([data, [0, 1, 0]])
 
     np.random.shuffle(combined_data)
-    print("length:",len(combined_data))
+    print("length:", len(combined_data))
     return combined_data
 
 
@@ -92,8 +94,10 @@ print(len(test_X))
 print("val labels length:")
 print(len(test_y))
 
-train_X = np.clip(np.array(train_X).reshape(reshape) - np.mean(train_X), -10, 10) / 10
-test_X = np.clip(np.array(test_X).reshape(reshape) - np.mean(test_X), -10, 10) / 10
+train_X = np.clip(np.array(train_X).reshape(
+    reshape) - np.mean(train_X), -10, 10) / 10
+test_X = np.clip(np.array(test_X).reshape(
+    reshape) - np.mean(test_X), -10, 10) / 10
 
 train_y = np.array(train_y)
 test_y = np.array(test_y)
@@ -120,13 +124,15 @@ model.add(Conv1D(3, (16)))
 model.add(Reshape((3,)))
 model.add(Activation('softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam', metrics=['accuracy'])
 
 epochs = 10
 batch_size = 32
 #print("executing training iteration " + str(itteration))
-model.fit(train_X, train_y, batch_size=batch_size, epochs=epochs, validation_data=(test_X, test_y))
+model.fit(train_X, train_y, batch_size=batch_size,
+          epochs=epochs, validation_data=(test_X, test_y))
 #model_name = f"new_models/{round(score[1]*100,2)}-acc-64x3-batch-norm-{epoch}epoch-{int(time.time())}-loss-{round(score[0],2)}.model"
-#model.save(model_name)
-#print("saved:")
-#print(MODEL_NAME)
+# model.save(model_name)
+# print("saved:")
+# print(MODEL_NAME)
