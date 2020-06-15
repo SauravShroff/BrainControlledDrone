@@ -1,7 +1,7 @@
 # fill in an accurate file path, run to see useful analyics on data
 import numpy as np
 
-file_path = "D:/model_data/1591734041 to 1591734061"
+file_path = "D:/model_data/1591990054 to 1591990646"
 
 brain_data_package = np.load(file_path + "/1b.npy")
 print(brain_data_package.shape)
