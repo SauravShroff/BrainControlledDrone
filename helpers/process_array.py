@@ -10,3 +10,4 @@ def shuffle_in_unison(a, b):
         shuffled_a[new_index] = a[old_index]
         shuffled_b[new_index] = b[old_index]
     return shuffled_a, shuffled_b
+
