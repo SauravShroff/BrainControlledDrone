@@ -28,15 +28,15 @@ y_rand = np.random.rand(shape[0], shape[1])
 
 count = 0
 sum_vals = 0
-total_val = 0
+total_val = [0] * 4
 for frame in range(len(y_rand)):
     for stick in range(len(y_rand[0])):
         count += 1
         sum_vals += abs(y_train[frame][stick] - y_rand[frame][stick])
-
+        total_val[stick] += y_train[frame][stick]
 
 print("mean absolute error for random guesses would be:")
 print(sum_vals / count)
 
-average = total_val / count
+average = [x / (count/4) for x in total_val]
 print(average)
