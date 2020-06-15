@@ -39,4 +39,12 @@ print("mean absolute error for random guesses would be:")
 print(sum_vals / count)
 
 average = [x / (count/4) for x in total_val]
-print(average)
+# print(average)
+
+sum_vals_mean = 0
+for frame in range(len(y_rand)):
+    for stick in range(len(y_rand[0])):
+        sum_vals_mean += abs(average[stick] - y_train[frame][stick])
+
+print("mean absolute error for mean guesses would be:")
+print(sum_vals_mean / count)
