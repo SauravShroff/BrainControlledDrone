@@ -48,6 +48,19 @@ model = Sequential()
 model.add(Conv1D(64, (5), padding='same', input_shape=(16, 125)))
 model.add(Activation('relu'))
 
+
+model.add(Conv1D(128, (5), padding='same'))
+model.add(Activation('relu'))
+
+model.add(Conv1D(256, (5), padding='same'))
+model.add(Activation('relu'))
+
+model.add(Conv1D(512, (5), padding='same'))
+model.add(Activation('relu'))
+
+model.add(Dense(256))
+model.add(Activation('relu'))
+
 model.add(Dense(4))
 model.add(Activation('sigmoid'))
 
