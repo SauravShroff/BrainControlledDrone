@@ -66,5 +66,5 @@ model.add(Activation('sigmoid'))
 
 model.compile(loss='mean_squared_error',
               optimizer='adam', metrics=['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size=32,
+model.fit(x_train, y_train, batch_size=4,
           epochs=10, validation_data=(x_val, y_val))
