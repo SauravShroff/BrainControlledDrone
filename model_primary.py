@@ -7,6 +7,7 @@ import os
 import random
 import time
 import numpy as np
+import helpers.process_array as process
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
@@ -32,6 +33,8 @@ for session in sessions:
     y_train = session_label_data
 
 
+x_train, y_train = process.shuffle_in_unison(x_train, y_train)
+
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
 x_train = x_train[:-1000]
@@ -45,9 +48,8 @@ print(y_train.shape)
 model = Sequential()
 
 
-model.add(Conv1D(64, (5), padding='same', input_shape=(16, 125)))
+model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
 model.add(Activation('relu'))
-
 
 model.add(Conv1D(128, (5), padding='same'))
 model.add(Activation('relu'))
@@ -55,10 +57,8 @@ model.add(Activation('relu'))
 model.add(Conv1D(256, (5), padding='same'))
 model.add(Activation('relu'))
 
-model.add(Conv1D(512, (5), padding='same'))
-model.add(Activation('relu'))
-
-model.add(Dense(256))
+model.add(Flatten())
+model.add(Dense(128))
 model.add(Activation('relu'))
 
 model.add(Dense(4))
@@ -66,5 +66,5 @@ model.add(Activation('sigmoid'))
 
 model.compile(loss='mean_squared_error',
               optimizer='adam', metrics=['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size=1,
+model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
