@@ -1,7 +1,7 @@
 # fill in an accurate file path, run to see useful analyics on data
 import numpy as np
 
-file_path = "D:/model_data/1591990054 to 1591990646"
+file_path = "D:/model_data/1592254049 to 1592255054"
 
 brain_data_package = np.load(file_path + "/1b.npy")
 print(brain_data_package.shape)
@@ -24,6 +24,3 @@ print("the recording started at " + str(analytics[0]) + ", ended at " + str(
 
 controller = np.load(file_path + "/2c.npy")
 print(controller.shape)
-for i in controller:
-    # print(i.tolist())
-    continue

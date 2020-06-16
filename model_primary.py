@@ -29,16 +29,20 @@ for session in sessions:
     session_data = os.path.join(data_dir, session)
     session_brain_data = np.load(os.path.join(session_data, "1b.npy"))
     session_label_data = np.load(os.path.join(session_data, "2c.npy"))
-    x_train = session_brain_data
-    y_train = session_label_data
+    if type(x_train) is not np.ndarray:
+        x_train = session_brain_data
+        y_train = session_label_data
+    else:
+        x_train = np.append(x_train, session_brain_data)
+        y_train = np.append(y_train, session_label_data)
 
-
-x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
 x_train = x_train[:-1000]
 y_train = y_train[:-1000]
+
+# x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
 print(x_val.shape)
 print(y_val.shape)
