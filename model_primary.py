@@ -33,8 +33,8 @@ for session in sessions:
         x_train = session_brain_data
         y_train = session_label_data
     else:
-        x_train = np.append(x_train, session_brain_data)
-        y_train = np.append(y_train, session_label_data)
+        x_train = np.concatenate((x_train, session_brain_data))
+        y_train = np.concatenate((y_train, session_label_data))
 
 
 x_val = x_train[-1000:]
@@ -42,7 +42,7 @@ y_val = y_train[-1000:]
 x_train = x_train[:-1000]
 y_train = y_train[:-1000]
 
-# x_train, y_train = process.shuffle_in_unison(x_train, y_train)
+x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
 print(x_val.shape)
 print(y_val.shape)
