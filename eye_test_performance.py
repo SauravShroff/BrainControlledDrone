@@ -11,7 +11,7 @@ import os
 # Define some colors.
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
-GREEN = pygame.Color(0,255,0)
+GREEN = pygame.Color(0, 255, 0)
 
 # Load model for prediction
 model = tf.keras.models.load_model("D:/eye_models/new_model")
@@ -44,14 +44,6 @@ class TextPrint(object):
 
     def unindent(self):
         self.x -= 10
-
-
-minX = -0.678
-maxX = 0.681
-
-
-def norm(axis):
-    return max(0, min(1, (axis - minX) / (maxX - minX)))
 
 
 pygame.init()
