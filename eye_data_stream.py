@@ -167,7 +167,6 @@ one_brain = one_brain[0]
 
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
 
-
 analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC

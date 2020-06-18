@@ -11,6 +11,7 @@ import os
 # Define some colors.
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
+GREEN = pygame.Color(0,255,0)
 
 # Load model for prediction
 model = tf.keras.models.load_model("D:/eye_models/new_model")
@@ -28,8 +29,8 @@ class TextPrint(object):
         self.reset()
         self.font = pygame.font.Font(None, 20)
 
-    def tprint(self, screen, textString):
-        textBitmap = self.font.render(textString, True, BLACK)
+    def tprint(self, screen, textString, color=BLACK):
+        textBitmap = self.font.render(textString, True, color)
         screen.blit(textBitmap, (self.x, self.y))
         self.y += self.line_height
 
@@ -128,10 +129,10 @@ while not done:
 
         if inputs[1] > threshold:
             controller_data_package = np.array(
-                [[0, 1]])
+                [[1, 0]])
         else:
             controller_data_package = np.array(
-                [[1, 0]])
+                [[0, 1]])
 
         # take brain image
         brain_data_package = cyton_interface.pull_fft(inlet)
@@ -143,6 +144,11 @@ while not done:
         model_in = np.array([brain_data_package])
         guess_package = model(model_in).numpy()
         three_guess = np.append(three_guess, guess_package, 0)
+        if guess_package[0][0] > 0.5:
+            textPrint.tprint(screen, "OPEN", GREEN)
+        else:
+            textPrint.tprint(screen, "CLOSE")
+
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
     #
