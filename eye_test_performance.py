@@ -8,7 +8,12 @@ from pathlib import Path
 import cyton_interface
 import os
 
-# Define some colors.
+# Define user params
+
+SAVE_MODEL_PREDICTION = True
+DISPLAY_MODEL_PREDICTION = True
+
+# Define some colors
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
 GREEN = pygame.Color(0, 255, 0)
@@ -16,12 +21,7 @@ GREEN = pygame.Color(0, 255, 0)
 # Load model for prediction
 model = tf.keras.models.load_model("D:/eye_models/new_model")
 
-model(np.zeros((1, 16, 125)))[0]
-# YOU ARE HERE
-
-# This is a simple class that will help us print to the screen.
-# It has nothing to do with the joysticks, just outputting the
-# information.
+# Define print class
 
 
 class TextPrint(object):
@@ -82,12 +82,9 @@ inlet = cyton_interface.connect_to_cyton()
 # -------- Main Program Loop -----------
 while not done:
     # EVENT PROCESSING STEP
-    #
-    # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
-    # JOYBUTTONUP, JOYHATMOTION
 
     for event in pygame.event.get():  # User did something.
-        if event.type == pygame.QUIT:  # If user clicked close.
+        if event.type == pygame.QUIT:  # If user clicked close / program was ended from command line
             done = True  # Flag that we are done so we exit this loop.
 
     # First, clear the screen to white. Don't put other drawing commands
@@ -136,10 +133,11 @@ while not done:
         model_in = np.array([brain_data_package])
         guess_package = model(model_in).numpy()
         three_guess = np.append(three_guess, guess_package, 0)
-        if guess_package[0][0] > 0.5:
-            textPrint.tprint(screen, "OPEN", GREEN)
-        else:
-            textPrint.tprint(screen, "CLOSE")
+        if DISPLAY_MODEL_PREDICTION:
+            if guess_package[0][0] > 0.5:
+                textPrint.tprint(screen, "OPEN", GREEN)
+            else:
+                textPrint.tprint(screen, "CLOSE")
 
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
@@ -148,7 +146,7 @@ while not done:
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
-    # Limit to 20 frames per second.cc
+    # Limit to 60 frames per second.cc
     counter += 1
     clock.tick(60)
 
@@ -185,7 +183,8 @@ analytics = analytics  # edit if needed remove if not
 
 np.save(location + "/1b.npy", one_brain)
 np.save(location + "/2c.npy", two_controller)
-np.save(location + "/3g.npy", three_guess)
+if SAVE_MODEL_PREDICTION:
+    np.save(location + "/3g.npy", three_guess)
 np.save(location + "/analytics.npy", analytics)
 
 # close game
