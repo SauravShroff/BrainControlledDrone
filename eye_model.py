@@ -27,8 +27,10 @@ y_train = None
 
 for session in sessions:
     session_data = os.path.join(data_dir, session)
-    session_brain_data = np.load(os.path.join(session_data, "1b.npy"))
-    session_label_data = np.load(os.path.join(session_data, "2c.npy"))
+    session_brain_data = np.load(
+        os.path.join(session_data, "1b.npy"))[240:-240]
+    session_label_data = np.load(
+        os.path.join(session_data, "2c.npy"))[240:-240]
     if type(x_train) is not np.ndarray:
         x_train = session_brain_data
         y_train = session_label_data
@@ -37,10 +39,10 @@ for session in sessions:
         y_train = np.concatenate((y_train, session_label_data))
 
 
-x_val = x_train[-100:]
-y_val = y_train[-100:]
-x_train = x_train[:-100]
-y_train = y_train[:-100]
+x_val = x_train[-1000:]
+y_val = y_train[-1000:]
+x_train = x_train[:-1000]
+y_train = y_train[:-1000]
 
 x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
@@ -54,11 +56,9 @@ model = Sequential()
 
 model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(128, (5), padding='same'))
-model.add(Activation('relu'))
-
-model.add(Conv1D(256, (5), padding='same'))
 model.add(Activation('relu'))
 
 model.add(Flatten())
@@ -70,7 +70,7 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, batch_size=4,
+model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
 
 model.save("D:/eye_models/new_model")
