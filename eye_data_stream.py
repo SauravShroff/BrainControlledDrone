@@ -166,16 +166,13 @@ one_brain = np.array([one_brain])
 one_brain = one_brain[0]
 
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
-for frame in two_controller:
-    for val in range(len(frame)):
-        frame[val] = norm(frame[val])
-two_controller = np.clip(two_controller, 0, 1)
+
 
 analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
-np.save(location + "/1b.npy", one_brain)  # add loc :)
+np.save(location + "/1b.npy", one_brain)
 np.save(location + "/2c.npy", two_controller)
 np.save(location + "/analytics.npy", analytics)
 

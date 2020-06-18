@@ -1,7 +1,3 @@
-
-
-
-
 # Hello
 import tensorflow as tf
 import airsim
@@ -18,13 +14,15 @@ WHITE = pygame.Color('white')
 
 # Load model for prediction
 model = tf.keras.models.load_model("D:/eye_models/new_model")
-# print(model.__call__(np.zeros((1, 16, 125))))
-# print(model(np.zeros((1,16,125))))
-#####YOU ARE HERE
+
+model(np.zeros((1, 16, 125)))[0]
+# YOU ARE HERE
 
 # This is a simple class that will help us print to the screen.
 # It has nothing to do with the joysticks, just outputting the
 # information.
+
+
 class TextPrint(object):
     def __init__(self):
         self.reset()
@@ -77,6 +75,7 @@ textPrint = TextPrint()
 # initialize arrays
 one_brain = []
 two_controller = np.array([[0, 0]])
+three_guess = np.array([[0, 0]])
 
 
 # initialize start time
@@ -141,6 +140,9 @@ while not done:
         # print(controller_data_package)
         two_controller = np.append(two_controller, controller_data_package, 0)
 
+        model_in = np.array([brain_data_package])
+        guess_package = model(model_in).numpy()
+        three_guess = np.append(three_guess, guess_package, 0)
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
     #
@@ -176,17 +178,16 @@ one_brain = np.array([one_brain])
 one_brain = one_brain[0]
 
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
-for frame in two_controller:
-    for val in range(len(frame)):
-        frame[val] = norm(frame[val])
-two_controller = np.clip(two_controller, 0, 1)
+
+three_guess = np.delete(three_guess, 0, 0)  # remove dummy element
 
 analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
-np.save(location + "/1b.npy", one_brain)  # add loc :)
+np.save(location + "/1b.npy", one_brain)
 np.save(location + "/2c.npy", two_controller)
+np.save(location + "/3g.npy", three_guess)
 np.save(location + "/analytics.npy", analytics)
 
 # close game
