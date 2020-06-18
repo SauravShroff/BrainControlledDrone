@@ -16,7 +16,10 @@ DISPLAY_MODEL_PREDICTION = True
 # Define some colors
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
+RED = pygame.Color(255, 0, 0)
 GREEN = pygame.Color(0, 255, 0)
+BLUE = pygame.Color(0, 0, 255)
+
 
 # Load model for prediction
 model = tf.keras.models.load_model("D:/eye_models/new_model")
@@ -118,10 +121,12 @@ while not done:
 
         if inputs[1] > threshold:
             controller_data_package = np.array(
-                [[1, 0]])
+                [[1, 0]])  # open
+            textPrint.tprint(screen, "RECORDING OPEN", BLUE)
         else:
             controller_data_package = np.array(
-                [[0, 1]])
+                [[0, 1]])  # close
+            textPrint.tprint(screen, "RECORDING CLOSE", BLUE)
 
         # take brain image
         brain_data_package = cyton_interface.pull_fft(inlet)
@@ -135,18 +140,14 @@ while not done:
         three_guess = np.append(three_guess, guess_package, 0)
         if DISPLAY_MODEL_PREDICTION:
             if guess_package[0][0] > 0.5:
-                textPrint.tprint(screen, "OPEN", GREEN)
+                textPrint.tprint(screen, "GUESSING OPEN", GREEN)
             else:
-                textPrint.tprint(screen, "CLOSE")
-
-    #
-    # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
-    #
+                textPrint.tprint(screen, "GUESSING CLOSE", RED)
 
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
-    # Limit to 60 frames per second.cc
+    # Limit to 60 frames per second
     counter += 1
     clock.tick(60)
 
