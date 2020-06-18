@@ -14,7 +14,7 @@ from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
 start_time = 0
 end_time = float('inf')
-data_dir = "D:/model_data"
+data_dir = "D:/drone_model_data"
 
 sessions = []
 for item in os.listdir(data_dir):

@@ -3,7 +3,7 @@ from numpy.linalg import norm
 
 
 relevant_channel = 4
-a = np.load("D:/model_data/1591659935 to 1591659941/1b.npy")
+a = np.load("D:/drone_model_data/1591659935 to 1591659941/1b.npy")
 a = a[0]
 print(a.shape)
 

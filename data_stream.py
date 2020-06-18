@@ -150,7 +150,7 @@ analytics = np.array(
 # CREATE DIRECTORY FOR SAVING
 
 folder_name = str(int(start_time)) + " to " + str(int(end_time))
-location = "D:/model_data/" + folder_name
+location = "D:/drone_model_data/" + folder_name
 os.mkdir(location)
 
 
@@ -168,10 +168,10 @@ analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
-np.save("D:/model_data/" + folder_name + "/1b.npy", one_brain)  # add loc :)
-np.save("D:/model_data/" + folder_name + "/2c.npy", two_controller)
-np.save("D:/model_data/" + folder_name + "/3s.npy", three_simulator)
-np.save("D:/model_data/" + folder_name + "/analytics.npy", analytics)
+np.save(location + "/1b.npy", one_brain)  # add loc :)
+np.save(location + "/2c.npy", two_controller)
+np.save(location + "/3s.npy", three_simulator)
+np.save(location + "/analytics.npy", analytics)
 
 # close game
 pygame.quit()

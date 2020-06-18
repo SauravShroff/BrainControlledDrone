@@ -6,7 +6,7 @@ import numpy as np
 
 start_time = 1592254049
 end_time = float('inf')
-data_dir = "D:/model_data"
+data_dir = "D:/drone_model_data"
 
 sessions = []
 for item in os.listdir(data_dir):
@@ -48,4 +48,3 @@ for frame in range(len(y_rand)):
 
 print("mean absolute error for mean guesses would be:")
 print(sum_vals_mean / count)
-
