@@ -10,7 +10,7 @@ import os
 
 # Define user params
 
-SAVE_MODEL_PREDICTION = True
+VIEW_ONLY_MODE = False
 DISPLAY_MODEL_PREDICTION = True
 
 # Define some colors
@@ -182,11 +182,11 @@ analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
 
-np.save(location + "/1b.npy", one_brain)
-np.save(location + "/2c.npy", two_controller)
-if SAVE_MODEL_PREDICTION:
+if not VIEW_ONLY_MODE:
+    np.save(location + "/1b.npy", one_brain)
+    np.save(location + "/2c.npy", two_controller)
     np.save(location + "/3g.npy", three_guess)
-np.save(location + "/analytics.npy", analytics)
+    np.save(location + "/analytics.npy", analytics)
 
 # close game
 pygame.quit()
