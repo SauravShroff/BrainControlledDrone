@@ -28,9 +28,9 @@ y_train = None
 for session in sessions:
     session_data = os.path.join(data_dir, session)
     session_brain_data = np.load(
-        os.path.join(session_data, "1b.npy"))[240:-240]
+        os.path.join(session_data, "1b.npy"))
     session_label_data = np.load(
-        os.path.join(session_data, "2c.npy"))[240:-240]
+        os.path.join(session_data, "2c.npy"))
     if type(x_train) is not np.ndarray:
         x_train = session_brain_data
         y_train = session_label_data

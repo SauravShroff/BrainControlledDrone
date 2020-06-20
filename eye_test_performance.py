@@ -183,9 +183,9 @@ analytics = analytics  # edit if needed remove if not
 # SAVE ARRAYS TO SPECIFIED LOC
 
 if not VIEW_ONLY_MODE:
-    np.save(location + "/1b.npy", one_brain)
-    np.save(location + "/2c.npy", two_controller)
-    np.save(location + "/3g.npy", three_guess)
+    np.save(location + "/1b.npy", one_brain)[240:-240]
+    np.save(location + "/2c.npy", two_controller)[240:-240]
+    np.save(location + "/3g.npy", three_guess)[240:-240]
     np.save(location + "/analytics.npy", analytics)
 
 # close game
