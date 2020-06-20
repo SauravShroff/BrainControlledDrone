@@ -1,4 +1,10 @@
-# Hello
+# This file is created to collect and store training data according to
+# paramaters reading from both the OpenBCI headset and the Spektrum
+# controller
+# Author: Saurav Shroff
+# READ: make sure to locally run "python -m pip install brainflow" otherwise (@NicholasWeaver) "you're GONNA have a BAD DAY"
+# Visit: https://brainflow.readthedocs.io/en/stable/UserAPI.html for documentation on the Cyton/Daisy board SDK
+
 import tensorflow as tf
 import airsim
 import pygame
