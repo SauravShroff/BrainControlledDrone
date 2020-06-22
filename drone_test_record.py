@@ -28,7 +28,7 @@ GREEN = pygame.Color(0, 255, 0)
 BLUE = pygame.Color(0, 0, 255)
 
 # Load model for prediction
-model = tf.keras.models.load_model("D:/eye_models/" + MODEL_NAME)
+model = tf.keras.models.load_model("D:/drone_models/" + MODEL_NAME)
 
 # Define print class
 
