@@ -13,7 +13,7 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
 # Define user params
-MODEL_NAME = "sarah_and_saurav"
+MODEL_NAME = ""
 
 start_time = 0
 end_time = 1592702124
