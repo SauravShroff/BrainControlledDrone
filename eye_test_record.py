@@ -1,8 +1,9 @@
-# This file is created to collect and store training data according to
-# paramaters reading from both the OpenBCI headset and the Spektrum
-# controller
+# This program collects training data for the eye classification problem.
+# It also simultaneously can load in an existing model and display current
+# predicitions. The program records brain data, label values, AND predicted
+# label values (run eye_review_session.py to get stats on accuracy during
+# a session).
 # Author: Saurav Shroff
-# READ: make sure to locally run "python -m pip install brainflow" otherwise (@NicholasWeaver) "you're GONNA have a BAD DAY"
 # Visit: https://brainflow.readthedocs.io/en/stable/UserAPI.html for documentation on the Cyton/Daisy board SDK
 
 import tensorflow as tf
