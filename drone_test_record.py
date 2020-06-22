@@ -1,4 +1,12 @@
-# Hello
+# This program collects training data for the drone controller regression
+# problem. It also simultaneously can load in an existing model and display
+# current predicitions. The program records brain data, label values, AND
+# predicted label values (run drone_review_session.py to get stats on accuracy
+# during a session).
+# Author: Saurav Shroff
+# Visit: https://brainflow.readthedocs.io/en/stable/UserAPI.html for documentation on the Cyton/Daisy board SDK
+
+import tensorflow as tf
 import airsim
 import pygame
 import time
@@ -7,14 +15,24 @@ from pathlib import Path
 import cyton_interface
 import os
 
-# Define some colors.
+# Define user params
+VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
+DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
+MODEL_NAME = ""
+
+# Define some colors
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
+RED = pygame.Color(255, 0, 0)
+GREEN = pygame.Color(0, 255, 0)
+BLUE = pygame.Color(0, 0, 255)
+
+# Load model for prediction
+model = tf.keras.models.load_model("D:/eye_models/" + MODEL_NAME)
+
+# Define print class
 
 
-# This is a simple class that will help us print to the screen.
-# It has nothing to do with the joysticks, just outputting the
-# information.
 class TextPrint(object):
     def __init__(self):
         self.reset()
@@ -39,6 +57,8 @@ class TextPrint(object):
 
 minX = -0.678
 maxX = 0.681
+
+# normalize controller values from range(-0.678, 0.681) to range(0, 1)
 
 
 def norm(axis):
@@ -68,6 +88,7 @@ textPrint = TextPrint()
 one_brain = []
 two_controller = np.array([[0, 0, 0, 0]])
 three_simulator = np.array([])
+four_guess = np.array([[0, 0, 0, 0]])
 
 # initialize start time
 start_time = time.time()
@@ -80,9 +101,6 @@ inlet = cyton_interface.connect_to_cyton()
 # -------- Main Program Loop -----------
 while not done:
     # EVENT PROCESSING STEP
-    #
-    # Possible joystick actions: JOYAXISMOTION, JOYBALLMOTION, JOYBUTTONDOWN,
-    # JOYBUTTONUP, JOYHATMOTION
 
     for event in pygame.event.get():  # User did something.
         if event.type == pygame.QUIT:  # If user clicked close.
@@ -132,7 +150,7 @@ while not done:
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
-    # Limit to 20 frames per second.cc
+    # Limit to 60 frames per second.cc
     counter += 1
     clock.tick(60)
 
