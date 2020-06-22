@@ -1,4 +1,4 @@
-# This file is created to train a classification model for opem/closed eyes based on prerecorded training
+# This program trains a classification model for open/closed eyes based on prerecorded training
 # data and a specified file location paramater
 # Author: Saurav Shroff
 
@@ -12,8 +12,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
-start_time = 1592701673
-end_time = float('inf')
+# Define user params
+MODEL_NAME = "sarah_and_saurav"
+
+start_time = 0
+end_time = 1592702124
 data_dir = "D:/eye_model_data"
 
 sessions = []
@@ -73,4 +76,4 @@ model.compile(loss='categorical_crossentropy',
 model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
 
-model.save("D:/eye_models/new_model")
+model.save("D:/eye_models/" + MODEL_NAME)
