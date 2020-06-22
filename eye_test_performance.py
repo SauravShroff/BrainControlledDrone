@@ -15,8 +15,9 @@ import cyton_interface
 import os
 
 # Define user params
-VIEW_ONLY_MODE = False # When set to True, data will not be recorded
-DISPLAY_MODEL_PREDICTION = True # When set to True, the model prediction is displayed on screen
+VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
+DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
+MODEL_NAME = "Sarah_Only"
 
 # Define some colors
 BLACK = pygame.Color('black')
@@ -27,9 +28,11 @@ BLUE = pygame.Color(0, 0, 255)
 
 
 # Load model for prediction
-model = tf.keras.models.load_model("D:/eye_models/new_model")
+model = tf.keras.models.load_model("D:/eye_models/" + MODEL_NAME)
 
 # Define print class
+
+
 class TextPrint(object):
     def __init__(self):
         self.reset()
@@ -119,10 +122,8 @@ while not done:
             textPrint.tprint(screen, "Axis {} value: {:>6.3f}".format(i, axis))
         textPrint.unindent()
 
-        
-
         # Generate one hot vector of eye state that will be saved as a label
-        threshold = 0.0 # Stick values above 0.0 will be gated to "Open", and values below will be gated to "Close"
+        threshold = 0.0  # Stick values above 0.0 will be gated to "Open", and values below will be gated to "Close"
         if inputs[1] > threshold:
             controller_data_package = np.array(
                 [[1, 0]])  # Open one hot vector
@@ -133,15 +134,19 @@ while not done:
             textPrint.tprint(screen, "RECORDING CLOSE", BLUE)
 
         # Take brain image
-        brain_data_package = cyton_interface.pull_fft(inlet) # Returns a 16x125 np.array represening a Fourier transform of current brain signal
+        # Returns a 16x125 np.array represening a Fourier transform of current brain signal
+        brain_data_package = cyton_interface.pull_fft(inlet)
         one_brain.append(brain_data_package)
 
         # Save label
         two_controller = np.append(two_controller, controller_data_package, 0)
 
-        model_in = np.array([brain_data_package]) # This changes the shape from (16, 125) to (1, 16, 125), which is what model() expects
-        guess_package = model(model_in).numpy() # Generate a guess, and save it to a format that is savable
-        three_guess = np.append(three_guess, guess_package, 0) # Append guess to the list of all guesses that will be saved
+        # This changes the shape from (16, 125) to (1, 16, 125), which is what model() expects
+        model_in = np.array([brain_data_package])
+        # Generate a guess, and save it to a format that is savable
+        guess_package = model(model_in).numpy()
+        # Append guess to the list of all guesses that will be saved
+        three_guess = np.append(three_guess, guess_package, 0)
         if DISPLAY_MODEL_PREDICTION:
             if guess_package[0][0] > 0.5:
                 textPrint.tprint(screen, "GUESSING OPEN", GREEN)
@@ -152,7 +157,7 @@ while not done:
     pygame.display.flip()
 
     # Limit to 60 frames per second
-    counter += 1 # Count each frame, saved in analytics.npy
+    counter += 1  # Count each frame, saved in analytics.npy
     clock.tick(60)
 
 ###CLOSING AND SAVING SCRIPT###
@@ -166,29 +171,31 @@ samples_per_second = counter/seconds_elapsed
 analytics = np.array(
     [start_time, end_time, seconds_elapsed, samples_per_second])
 
-# Create directory for saving
-
-folder_name = str(int(start_time)) + " to " + str(int(end_time))
-location = "D:/eye_model_data/" + folder_name
-os.mkdir(location)
-
 
 # Prepare data arrays for saving
 
 one_brain = np.array([one_brain])
 one_brain = one_brain[0]
+one_brain = one_brain[240:-240]  # Remove first and last 10 seconds
 
-two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
+two_controller = np.delete(two_controller, 0, 0)  # Remove dummy element
+two_controller = two_controller[240:-240]  # Remove first and last 10 seconds
 
-three_guess = np.delete(three_guess, 0, 0)  # remove dummy element
+three_guess = np.delete(three_guess, 0, 0)  # Remove dummy element
+three_guess = three_guess[240:-240]  # Remove first and last 10 seconds
 
-analytics = analytics  # edit if needed remove if not
+# analytics = analytics  # edit if needed remove if not
 
 # Save arrays to specified location iff user wants it to be saved
 if not VIEW_ONLY_MODE:
-    np.save(location + "/1b.npy", one_brain)[240:-240]
-    np.save(location + "/2c.npy", two_controller)[240:-240]
-    np.save(location + "/3g.npy", three_guess)[240:-240]
+    # Create directory for saving
+    folder_name = str(int(start_time)) + " to " + str(int(end_time))
+    location = "D:/eye_model_data/" + folder_name
+    os.mkdir(location)
+    # Save in directory
+    np.save(location + "/1b.npy", one_brain)
+    np.save(location + "/2c.npy", two_controller)
+    np.save(location + "/3g.npy", three_guess)
     np.save(location + "/analytics.npy", analytics)
 
 # Finally, close game
