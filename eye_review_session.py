@@ -1,6 +1,6 @@
 import numpy as np
 
-file_path = "D:/eye_model_data/1592501250 to 1592501687"
+file_path = "D:/eye_model_data/1592702292 to 1592702359"
 
 true_eye = np.load(file_path + "/2c.npy")
 guess_eye = np.load(file_path + "/3g.npy")

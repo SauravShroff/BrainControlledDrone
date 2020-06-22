@@ -12,7 +12,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
-start_time = 0
+start_time = 1592701673
 end_time = float('inf')
 data_dir = "D:/eye_model_data"
 
