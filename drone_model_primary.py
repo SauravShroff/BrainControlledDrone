@@ -12,6 +12,9 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
+# Define user params
+MODEL_NAME = "to_date_6.22.19"
+
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
@@ -51,14 +54,11 @@ print(y_train.shape)
 
 model = Sequential()
 
-
 model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
 model.add(Activation('relu'))
+model.add(Dropout(0.2))
 
 model.add(Conv1D(128, (5), padding='same'))
-model.add(Activation('relu'))
-
-model.add(Conv1D(256, (5), padding='same'))
 model.add(Activation('relu'))
 
 model.add(Flatten())
@@ -70,5 +70,7 @@ model.add(Activation('sigmoid'))
 
 model.compile(loss='mean_squared_error',
               optimizer='adam', metrics=['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size=4,
+model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
+
+model.save("D:/drone_models/" + MODEL_NAME)
