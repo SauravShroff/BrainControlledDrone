@@ -38,8 +38,8 @@ class TextPrint(object):
         self.reset()
         self.font = pygame.font.Font(None, 20)
 
-    def tprint(self, screen, textString):
-        textBitmap = self.font.render(textString, True, BLACK)
+    def tprint(self, screen, textString, color=BLACK):
+        textBitmap = self.font.render(textString, True, color)
         screen.blit(textBitmap, (self.x, self.y))
         self.y += self.line_height
 
@@ -140,8 +140,16 @@ while not done:
         brain_data_package = cyton_interface.pull_fft(inlet)
         one_brain.append(brain_data_package)
 
-        # print(controller_data_package)
+        # Save label
         two_controller = np.append(two_controller, controller_data_package, 0)
+
+        # This changes the shape from (16, 125) to (1, 16, 125), which is what model() expects
+        model_in = np.array([brain_data_package])
+        # Generate a guess, and save it to a format that is savable
+        guess_package = model(model_in).numpy()
+        # Append guess to the list of all guesses that will be saved
+        four_guess = np.append(four_guess, guess_package, 0)
+        TextPrint.tprint(screen, str(guess_package))
 
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
@@ -165,31 +173,37 @@ samples_per_second = counter/seconds_elapsed
 analytics = np.array(
     [start_time, end_time, seconds_elapsed, samples_per_second])
 
-# CREATE DIRECTORY FOR SAVING
-
-folder_name = str(int(start_time)) + " to " + str(int(end_time))
-location = "D:/drone_model_data/" + folder_name
-os.mkdir(location)
-
-
 # PREPEARE ARRAYS FOR SAVING
 
 one_brain = np.array([one_brain])
 one_brain = one_brain[0]
+one_brain = one_brain[240:-240]  # Remove first and last 10 seconds
+
+
 two_controller = np.delete(two_controller, 0, 0)  # remove dummy element
 for frame in two_controller:
     for val in range(len(frame)):
         frame[val] = norm(frame[val])
 two_controller = np.clip(two_controller, 0, 1)
-three_simulator = three_simulator  # edit if needed remove if not
-analytics = analytics  # edit if needed remove if not
+two_controller = two_controller[240:-240]  # Remove first and last 10 seconds
+
+# three_simulator = three_simulator  # edit if needed remove if not
+
+four_guess = four_guess[240:-240]  # Remove first and last 10 seconds
+
+# analytics = analytics  # edit if needed remove if not
 
 # SAVE ARRAYS TO SPECIFIED LOC
+if not VIEW_ONLY_MODE:
+    folder_name = str(int(start_time)) + " to " + str(int(end_time))
+    location = "D:/drone_model_data/" + folder_name
+    os.mkdir(location)
 
-np.save(location + "/1b.npy", one_brain)  # add loc :)
-np.save(location + "/2c.npy", two_controller)
-np.save(location + "/3s.npy", three_simulator)
-np.save(location + "/analytics.npy", analytics)
+    np.save(location + "/1b.npy", one_brain)  # add loc :)
+    np.save(location + "/2c.npy", two_controller)
+    np.save(location + "/3s.npy", three_simulator)
+    np.save(location + "/4g.npy", four_guess)
+    np.save(location + "/analytics.npy", analytics)
 
 # close game
 pygame.quit()
