@@ -18,7 +18,7 @@ import os
 # Define user params
 VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
 DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
-MODEL_NAME = ""
+MODEL_NAME = "to_date_6.22.19"
 
 # Define some colors
 BLACK = pygame.Color('black')
@@ -146,10 +146,12 @@ while not done:
         # This changes the shape from (16, 125) to (1, 16, 125), which is what model() expects
         model_in = np.array([brain_data_package])
         # Generate a guess, and save it to a format that is savable
-        guess_package = model(model_in).numpy()
+        guess_package = [[0, 0, 0, 0]]
         # Append guess to the list of all guesses that will be saved
         four_guess = np.append(four_guess, guess_package, 0)
-        TextPrint.tprint(screen, str(guess_package))
+        if DISPLAY_MODEL_PREDICTION:
+            textPrint.tprint(screen, "guessing:")
+            textPrint.tprint(screen, str(guess_package))
 
     #
     # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
