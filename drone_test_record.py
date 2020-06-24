@@ -19,6 +19,7 @@ import os
 VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
 DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
 MODEL_NAME = "to_date_6.22.19"
+SUBJECT_NAME = ""
 
 # Define some colors
 BLACK = pygame.Color('black')
@@ -198,7 +199,7 @@ four_guess = four_guess[240:-240]  # Remove first and last 10 seconds
 # SAVE ARRAYS TO SPECIFIED LOC
 if not VIEW_ONLY_MODE:
     folder_name = str(int(start_time)) + " to " + str(int(end_time))
-    location = "D:/drone_model_data/" + folder_name
+    location = "D:/drone_model_data/" + SUBJECT_NAME + "/" + folder_name
     os.mkdir(location)
 
     np.save(location + "/1b.npy", one_brain)  # add loc :)
