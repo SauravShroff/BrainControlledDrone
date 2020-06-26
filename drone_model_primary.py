@@ -8,31 +8,36 @@ import random
 import time
 import numpy as np
 import helpers.process_array as process
+import baseline_performance
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 
 # Define user params
 MODEL_NAME = "to_date_6.23.19"
+SAVE_MODEL = False
 
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
+subjects = ["Saurav", "Peter", "Sarah", "Evan"]
 
 sessions = []
-for item in os.listdir(data_dir):
-    item_time = int(item[:10])
-    if (item_time >= start_time) and (item_time <= end_time):
-        sessions.append(item)
+for subject in subjects:
+    data_dir_local = os.path.join(data_dir, subject)
+    for item in os.listdir(data_dir_local):
+        item_time = int(item[:10])
+        if (item_time >= start_time) and (item_time <= end_time):
+            sessions.append(os.path.join(data_dir_local, item))
 
 x_train = None
 y_train = None
 
-for session in sessions:
-    session_data = os.path.join(data_dir, session)
-    session_brain_data = np.load(os.path.join(session_data, "1b.npy"))
 
-    session_label_data = np.load(os.path.join(session_data, "2c.npy"))
+for session in sessions:
+    print("loading from session" + session)
+    session_brain_data = np.load(os.path.join(session, "1b.npy"))
+    session_label_data = np.load(os.path.join(session, "2c.npy"))
     if type(x_train) is not np.ndarray:
         x_train = session_brain_data
         y_train = session_label_data
@@ -43,6 +48,7 @@ for session in sessions:
 
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
+baseline_performance.compute_baseline(y_val)
 x_train = x_train[: -1000]
 y_train = y_train[: -1000]
 
@@ -74,5 +80,8 @@ model.compile(loss='mean_squared_error',
 model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
 
-model.save("D:/drone_models/" + MODEL_NAME)
-print("saved")
+if SAVE_MODEL:
+    model.save("D:/drone_models/" + MODEL_NAME)
+    print("saved")
+else:
+    print("not saved as per user param")
