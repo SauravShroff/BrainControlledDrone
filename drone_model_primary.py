@@ -31,8 +31,6 @@ y_train = None
 for session in sessions:
     session_data = os.path.join(data_dir, session)
     session_brain_data = np.load(os.path.join(session_data, "1b.npy"))
-    ]
-
 
     session_label_data = np.load(os.path.join(session_data, "2c.npy"))
     if type(x_train) is not np.ndarray:
@@ -45,8 +43,8 @@ for session in sessions:
 
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
-x_train= x_train[: -1000]
-y_train= y_train[: -1000]
+x_train = x_train[: -1000]
+y_train = y_train[: -1000]
 
 x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
@@ -72,8 +70,8 @@ model.add(Dense(4))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='mean_squared_error',
-              optimizer = 'adam', metrics = ['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size = 32,
+              optimizer='adam', metrics=['mean_absolute_error'])
+model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
 
 model.save("D:/drone_models/" + MODEL_NAME)
