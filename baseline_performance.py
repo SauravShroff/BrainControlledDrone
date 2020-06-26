@@ -6,7 +6,7 @@ import numpy as np
 
 start_time = 1592254049
 end_time = float('inf')
-data_dir = "D:/drone_model_data"
+data_dir = "D:/drone_model_data/saurav"
 
 sessions = []
 for item in os.listdir(data_dir):
