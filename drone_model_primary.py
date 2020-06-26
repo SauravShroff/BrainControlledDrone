@@ -20,7 +20,7 @@ SAVE_MODEL = False
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
-subjects = ["Saurav", "Peter", "Sarah", "Evan"]
+subjects = ["Sarah", "Saurav"]
 # First find all the sessions we want to train on
 sessions = []
 for subject in subjects:
@@ -48,9 +48,12 @@ for session in sessions:
 # Set aside validation data
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
+print("Val baseline:")
 baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
 x_train = x_train[: -1000]
 y_train = y_train[: -1000]
+print("Train baseline:")
+baseline_performance.compute_baseline(y_train)
 
 x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
