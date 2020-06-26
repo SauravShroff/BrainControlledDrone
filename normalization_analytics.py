@@ -6,11 +6,15 @@ import os
 import random
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import colors
+from matplotlib.ticker import PercentFormatter
+
 
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
-subjects = ["Saurav", "Peter", "Sarah", "Evan"]
+subjects = ["Saurav"]
 
 sessions = []
 for subject in subjects:
@@ -44,4 +48,7 @@ for frame in y_train:
     axis1.append(frame[1])
     axis2.append(frame[2])
     axis3.append(frame[3])
-print(axis0)
+
+bins = np.arange(1.01, step=0.01)
+plt.hist(axis2, bins)
+plt.show()
