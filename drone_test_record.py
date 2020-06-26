@@ -19,7 +19,7 @@ import os
 VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
 DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
 MODEL_NAME = "to_date_6.22.19"
-SUBJECT_NAME = ""
+SUBJECT_NAME = "Evan"
 
 # Define some colors
 BLACK = pygame.Color('black')
