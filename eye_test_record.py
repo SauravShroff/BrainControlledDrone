@@ -18,7 +18,7 @@ import os
 # Define user params
 VIEW_ONLY_MODE = False  # When set to True, data will not be recorded
 DISPLAY_MODEL_PREDICTION = True  # Effects on-screen display only
-MODEL_NAME = "Sarah_Only"
+MODEL_NAME = "sarah_and_saurav"
 
 # Define some colors
 BLACK = pygame.Color('black')
