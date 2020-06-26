@@ -21,7 +21,7 @@ start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
 subjects = ["Saurav", "Peter", "Sarah", "Evan"]
-
+# First find all the sessions we want to train on
 sessions = []
 for subject in subjects:
     data_dir_local = os.path.join(data_dir, subject)
@@ -33,7 +33,7 @@ for subject in subjects:
 x_train = None
 y_train = None
 
-
+# Next load in all the data from each session
 for session in sessions:
     print("loading from session" + session)
     session_brain_data = np.load(os.path.join(session, "1b.npy"))
@@ -45,10 +45,10 @@ for session in sessions:
         x_train = np.concatenate((x_train, session_brain_data))
         y_train = np.concatenate((y_train, session_label_data))
 
-
+# Set aside validation data
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
-baseline_performance.compute_baseline(y_val)
+baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
 x_train = x_train[: -1000]
 y_train = y_train[: -1000]
 
@@ -59,6 +59,7 @@ print(y_val.shape)
 print(x_train.shape)
 print(y_train.shape)
 
+# Define model
 model = Sequential()
 
 model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
@@ -75,11 +76,13 @@ model.add(Activation('relu'))
 model.add(Dense(4))
 model.add(Activation('sigmoid'))
 
+# Compile and train
 model.compile(loss='mean_squared_error',
               optimizer='adam', metrics=['mean_absolute_error'])
 model.fit(x_train, y_train, batch_size=32,
           epochs=10, validation_data=(x_val, y_val))
 
+# Save if the user wanted to save
 if SAVE_MODEL:
     model.save("D:/drone_models/" + MODEL_NAME)
     print("saved")
