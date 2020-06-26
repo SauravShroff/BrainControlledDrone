@@ -51,5 +51,5 @@ def compute_baseline(y_train):
     print(sum_vals_mean / count)
 
 
-# y_train = init_local()
-# compute_baseline(y_train)
+y_train = init_local()
+compute_baseline(y_train)
