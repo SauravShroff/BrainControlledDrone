@@ -20,7 +20,7 @@ SAVE_MODEL = False
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
-subjects = ["Sarah", "Saurav"]
+subjects = ["Peter", "Evan", "Sarah", "Saurav"]
 # First find all the sessions we want to train on
 sessions = []
 for subject in subjects:
