@@ -83,7 +83,7 @@ model.add(Activation('sigmoid'))
 model.compile(loss='mean_squared_error',
               optimizer='adam', metrics=['mean_absolute_error'])
 model.fit(x_train, y_train, batch_size=32,
-          epochs=10, validation_data=(x_val, y_val))
+          epochs=100, validation_data=(x_val, y_val))
 
 # Save if the user wanted to save
 if SAVE_MODEL:
