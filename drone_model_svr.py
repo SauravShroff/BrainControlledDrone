@@ -1,4 +1,4 @@
-# This file is created to train a Deep CNN regression model based on prerecorded training
+# This file is created to train an SVR regression model based on prerecorded training
 # data and a specified file location paramater
 # Author: Saurav Shroff
 
