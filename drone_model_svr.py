@@ -12,6 +12,7 @@ import baseline_performance
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
+from sklearn import svm
 
 # Define user params
 MODEL_NAME = "to_date_6.23.19"
@@ -63,31 +64,15 @@ print(x_train.shape)
 print(y_train.shape)
 
 # Define model
-model = Sequential()
-
-model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
-
-model.add(Conv1D(128, (5), padding='same'))
-model.add(Activation('relu'))
-
-model.add(Flatten())
-model.add(Dense(128))
-model.add(Activation('relu'))
-
-model.add(Dense(4))
-model.add(Activation('sigmoid'))
+model = svm.SVR()
 
 # Compile and train
-model.compile(loss='mean_squared_error',
-              optimizer='adam', metrics=['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size=32,
-          epochs=100, validation_data=(x_val, y_val))
+
+model.fit(x_train, y_train)
 
 # Save if the user wanted to save
 if SAVE_MODEL:
-    model.save("D:/drone_models/" + MODEL_NAME)
+    # model.save("D:/drone_models/" + MODEL_NAME)
     print("saved")
 else:
     print("not saved as per user param")
