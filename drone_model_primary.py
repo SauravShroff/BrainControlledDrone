@@ -12,6 +12,7 @@ import baseline_performance
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
+from sklearn import svm
 
 # Define user params
 MODEL_NAME = "to_date_6.23.19"
