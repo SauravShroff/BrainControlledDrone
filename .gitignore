@@ -1,10 +1,6 @@
 
 .vscode/settings.json
 
-playground.py
-
-playground2.py
-
 __pycache__/cyton_interface.cpython-37.pyc
 
 *.pyc
