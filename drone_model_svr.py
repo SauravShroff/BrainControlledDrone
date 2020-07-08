@@ -46,6 +46,10 @@ for session in sessions:
         x_train = np.concatenate((x_train, session_brain_data))
         y_train = np.concatenate((y_train, session_label_data))
 
+# reshape x_train such that each frame
+x_train = x_train.flatten()
+x_train = x_train.reshape(-1, 2000)
+
 # Set aside validation data
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
@@ -56,6 +60,7 @@ y_train = y_train[: -1000]
 print("Train baseline:")
 baseline_performance.compute_baseline(y_train)
 
+# Randomize the order of training data
 x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
 print(x_val.shape)
