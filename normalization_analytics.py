@@ -35,13 +35,12 @@ for session in sessions:
     else:
         y_train = np.concatenate((y_train, session_label_data))
 
-print(y_train.shape)
+print("Plotting " + str(y_train.shape[0]) + " samples from " + str(subjects))
 
 axis0 = []
 axis1 = []
 axis2 = []
 axis3 = []
-
 
 for frame in y_train:
     axis0.append(frame[0])
