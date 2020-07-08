@@ -2,16 +2,13 @@
 # data and a specified file location paramater
 # Author: Saurav Shroff
 
-import tensorflow as tf
+
 import os
 import random
 import time
 import numpy as np
 import helpers.process_array as process
 import baseline_performance
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Reshape
-from tensorflow.keras.layers import Conv1D, MaxPooling1D, BatchNormalization
 from sklearn import svm
 
 # Define user params
@@ -63,17 +60,20 @@ baseline_performance.compute_baseline(y_train)
 # Randomize the order of training data
 x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
+# Convert y_train labels from a list of N 4-length arrays, to 4 lists of N items
+y_train = y_train.transpose()
+
 print(x_val.shape)
 print(y_val.shape)
 print(x_train.shape)
 print(y_train.shape)
 
-# Define model
-model = svm.SVR()
+# Define models (one for each controller axis)
+models = [svm.SVR(), svm.SVR(), svm.SVR(), svm.SVR()]
 
 # Compile and train
-
-model.fit(x_train, y_train)
+for i in range(len(models)):
+    models[i].fit(x_train, y_train[i])
 
 # Save if the user wanted to save
 if SAVE_MODEL:
