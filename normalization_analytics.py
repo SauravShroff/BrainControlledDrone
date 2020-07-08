@@ -14,7 +14,7 @@ from matplotlib.ticker import PercentFormatter
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
-subjects = ["Saurav"]
+subjects = ["Evan"]
 
 sessions = []
 for subject in subjects:
@@ -50,5 +50,18 @@ for frame in y_train:
     axis3.append(frame[3])
 
 bins = np.arange(1.01, step=0.01)
-plt.hist(axis2, bins)
+fig, axes = plt.subplots(nrows=2, ncols=2)
+plt0, plt1, plt2, plt3 = axes.flatten()
+plt0.hist(axis0, bins)
+plt1.hist(axis1, bins)
+plt2.hist(axis2, bins)
+plt3.hist(axis3, bins)
+
+plt0.set_title("Throttle (higher = up)")
+plt1.set_title("Rotation (higher = left)")
+plt2.set_title("Pitch (higher = forward)")
+plt3.set_title("Bank (higher = left)")
+
+
+fig.tight_layout()
 plt.show()
