@@ -9,10 +9,11 @@ import numpy as np
 import helpers.process_array as process
 import baseline_performance
 from sklearn import svm
+from joblib import dump, load
 
 # Define user params
-MODEL_NAME = "to_date_6.23.19"
-SAVE_MODEL = False
+MODEL_NAME = "svc_single_frame_7.9.2020"
+SAVE_MODEL = True
 
 start_time = 0
 end_time = float('inf')
@@ -87,7 +88,6 @@ for i in range(len(models)):
 
 # Save if the user wanted to save
 if SAVE_MODEL:
-    # model.save("D:/drone_models/" + MODEL_NAME)
-    print("saved")
+    dump(models, "D:/drone_models/" + MODEL_NAME)
 else:
     print("not saved as per user param")
