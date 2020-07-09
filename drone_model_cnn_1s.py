@@ -45,49 +45,58 @@ for session in sessions:
         x_train = np.concatenate((x_train, session_brain_data))
         y_train = np.concatenate((y_train, session_label_data))
 
-# Set aside validation data
-x_val = x_train[-1000:]
-y_val = y_train[-1000:]
-print("Val baseline:")
-baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
-x_train = x_train[: -1000]
-y_train = y_train[: -1000]
-print("Train baseline:")
-baseline_performance.compute_baseline(y_train)
+x_train2 = None
+y_train2 = None
+for window_start in range(len(x_train-24)):
+    if type(x_train2) is not np.ndarray:
+        x_train2 = x_train[window_start: window_start + 24]
+    else:
+        x_train2 = np.concatenate(
+            (x_train2, x_train[window_start: window_start + 24]))
+print(x_train2.shape)
+# # Set aside validation data
+# x_val = x_train[-1000:]
+# y_val = y_train[-1000:]
+# print("Val baseline:")
+# baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
+# x_train = x_train[: -1000]
+# y_train = y_train[: -1000]
+# print("Train baseline:")
+# baseline_performance.compute_baseline(y_train)
 
-x_train, y_train = process.shuffle_in_unison(x_train, y_train)
+# x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 
-print(x_val.shape)
-print(y_val.shape)
-print(x_train.shape)
-print(y_train.shape)
+# print(x_val.shape)
+# print(y_val.shape)
+# print(x_train.shape)
+# print(y_train.shape)
 
-# Define model
-model = Sequential()
+# # Define model
+# model = Sequential()
 
-model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
-model.add(Activation('relu'))
-model.add(Dropout(0.2))
+# model.add(Conv1D(64, (5), padding='same', input_shape=x_train.shape[1:]))
+# model.add(Activation('relu'))
+# model.add(Dropout(0.2))
 
-model.add(Conv1D(128, (5), padding='same'))
-model.add(Activation('relu'))
+# model.add(Conv1D(128, (5), padding='same'))
+# model.add(Activation('relu'))
 
-model.add(Flatten())
-model.add(Dense(128))
-model.add(Activation('relu'))
+# model.add(Flatten())
+# model.add(Dense(128))
+# model.add(Activation('relu'))
 
-model.add(Dense(4))
-model.add(Activation('sigmoid'))
+# model.add(Dense(4))
+# model.add(Activation('sigmoid'))
 
-# Compile and train
-model.compile(loss='mean_squared_error',
-              optimizer='adam', metrics=['mean_absolute_error'])
-model.fit(x_train, y_train, batch_size=32,
-          epochs=100, validation_data=(x_val, y_val))
+# # Compile and train
+# model.compile(loss='mean_squared_error',
+#               optimizer='adam', metrics=['mean_absolute_error'])
+# model.fit(x_train, y_train, batch_size=32,
+#           epochs=100, validation_data=(x_val, y_val))
 
-# Save if the user wanted to save
-if SAVE_MODEL:
-    model.save("D:/drone_models/" + MODEL_NAME)
-    print("saved")
-else:
-    print("not saved as per user param")
+# # Save if the user wanted to save
+# if SAVE_MODEL:
+#     model.save("D:/drone_models/" + MODEL_NAME)
+#     print("saved")
+# else:
+#     print("not saved as per user param")
