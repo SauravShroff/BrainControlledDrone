@@ -1,4 +1,4 @@
-# This programs computs and displays analytics on the distribution that data follows
+# This programs computes and displays analytics on the distribution that data follows
 # in hopes to learn how to best normalize the data
 # Author: Saurav Shroff
 
