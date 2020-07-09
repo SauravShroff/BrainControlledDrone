@@ -63,6 +63,13 @@ x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 y_train = y_train.transpose()
 y_val = y_val.transpose()
 
+# Convert train and val labels to one hot vectors
+for axis in y_train:
+    for i in range(len(axis)):
+        if axis[i] > 0.5:
+            axis[i] = 1
+        else:
+            axis[i] = 0
 
 print(x_val.shape)
 print(y_val.shape)
@@ -70,7 +77,8 @@ print(x_train.shape)
 print(y_train.shape)
 
 # Define models (one for each controller axis)
-models = [svm.SVC(), svm.SVC(), svm.SVC(), svm.SVC()]
+models = [svm.LinearSVC(dual=False), svm.LinearSVC(
+    dual=False), svm.LinearSVC(dual=False), svm.LinearSVC(dual=False)]
 
 # Compile and train
 for i in range(len(models)):
