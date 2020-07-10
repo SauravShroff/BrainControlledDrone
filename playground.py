@@ -61,6 +61,7 @@
 #     counter += 1
 # print(counter)
 
-import numpy as np
-a = np.arange(1.01, step=0.01)
-print(a)
+a = "hello"
+
+for i in range(1, len(a), 2):
+    print(i)

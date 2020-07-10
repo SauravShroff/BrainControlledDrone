@@ -14,7 +14,7 @@ from matplotlib.ticker import PercentFormatter
 start_time = 0
 end_time = float('inf')
 data_dir = "D:/drone_model_data"
-subjects = ["Evan"]
+subjects = ["Peter", "Evan", "Sarah", "Saurav"]
 
 sessions = []
 for subject in subjects:
