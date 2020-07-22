@@ -51,10 +51,9 @@ x_train = x_train.reshape(-1, 2000)
 x_val = x_train[-1000:]
 y_val = y_train[-1000:]
 print("Val baseline:")
-# baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
+baseline_performance.compute_baseline(y_val)  # Print baseline perf on val
 x_train = x_train[: -1000]
 y_train = y_train[: -1000]
-print("Train baseline:")
 # baseline_performance.compute_baseline(y_train)
 
 # Randomize the order of training data
@@ -64,5 +63,12 @@ x_train, y_train = process.shuffle_in_unison(x_train, y_train)
 y_train = y_train.transpose()
 y_val = y_val.transpose()
 
-print(y_train.shape)
+print(x_val.shape)
 print(y_val.shape)
+
+classifiers = load("D:\drone_models\svc_single_frame_7.9.2020")
+
+(1000, 2000)
+(4, 1000)
+(90030, 2000)
+(4, 90030)

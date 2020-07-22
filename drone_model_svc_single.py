@@ -13,7 +13,7 @@ from joblib import dump, load
 
 # Define user params
 MODEL_NAME = "svc_single_frame_7.9.2020"
-SAVE_MODEL = True
+SAVE_MODEL = False
 
 start_time = 0
 end_time = float('inf')
