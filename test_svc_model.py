@@ -68,7 +68,7 @@ print(y_val.shape)
 
 classifiers = load("D:\drone_models\svc_single_frame_7.9.2020")
 
-(1000, 2000)
-(4, 1000)
-(90030, 2000)
-(4, 90030)
+sum = [0, 0, 0, 0]
+count = [0, 0, 0, 0]
+for axis in range(len(classifiers)):
+    # asses the guess from the classifier in classifiers[axis] using x_val[i] and compare it to y_val[i]
